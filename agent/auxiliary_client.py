@@ -3046,6 +3046,15 @@ def _resolve_task_provider_model(
         if cfg_provider and cfg_provider != "auto":
             return cfg_provider, resolved_model, None, None, resolved_api_mode
 
+        # provider is "auto" (or unset) but config specified an explicit model
+        # (e.g. auxiliary.default.model = us.anthropic.claude-haiku-...).
+        # _resolve_auto ignores the model hint and always uses the main model,
+        # so we must resolve the provider explicitly here to honour cfg_model.
+        if resolved_model:
+            explicit_provider = _read_main_provider() or "auto"
+            if explicit_provider and explicit_provider != "auto":
+                return explicit_provider, resolved_model, None, None, resolved_api_mode
+
         return "auto", resolved_model, None, None, resolved_api_mode
 
     return "auto", resolved_model, None, None, resolved_api_mode
