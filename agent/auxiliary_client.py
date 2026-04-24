@@ -3055,7 +3055,11 @@ _DEFAULT_AUX_TIMEOUT = 30.0
 
 
 def _get_auxiliary_task_config(task: str) -> Dict[str, Any]:
-    """Return the config dict for auxiliary.<task>, or {} when unavailable."""
+    """Return the config dict for auxiliary.<task>, or {} when unavailable.
+
+    Falls back to auxiliary.default when no task-specific config exists.
+    Task-specific keys win over default keys ({**default_config, **task_config}).
+    """
     if not task:
         return {}
     try:
@@ -3064,8 +3068,13 @@ def _get_auxiliary_task_config(task: str) -> Dict[str, Any]:
     except ImportError:
         return {}
     aux = config.get("auxiliary", {}) if isinstance(config, dict) else {}
+    if not isinstance(aux, dict):
+        return {}
+    default_config = aux.get("default", {})
+    default_config = default_config if isinstance(default_config, dict) else {}
     task_config = aux.get(task, {}) if isinstance(aux, dict) else {}
-    return task_config if isinstance(task_config, dict) else {}
+    task_config = task_config if isinstance(task_config, dict) else {}
+    return {**default_config, **task_config}
 
 
 def _get_task_timeout(task: str, default: float = _DEFAULT_AUX_TIMEOUT) -> float:
