@@ -39,6 +39,8 @@ PYPROJECT_FILE = REPO_ROOT / "pyproject.toml"
 
 # Auto-extracted from noreply emails + manual overrides
 AUTHOR_MAP = {
+    # Fox in the Box maintainer (this fork — v0.6.0 upstream-separation migration)
+    "roadhero@gmail.com": "roadhero",
     # teknium (multiple emails)
     "teknium1@gmail.com": "teknium1",
     "qiyin.zuo@pcitc.com": "qiyin-code",
