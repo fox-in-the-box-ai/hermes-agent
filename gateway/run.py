@@ -2485,6 +2485,23 @@ class GatewayRunner:
                 exc_info=True,
             )
 
+        # === FITB ===
+        # Trigger fox-overlay's agent plugins so the monkey-patches and
+        # mem0_oss plugin actually fire at gateway boot. Upstream's
+        # PluginManager (which discovers hermes_agent.plugins entry-points)
+        # is invoked only from `hermes` CLI commands, not from this gateway
+        # startup path. Until upstream supports plugin autoload, this 4-line
+        # bootstrap shim is the agent-side equivalent of the webui-side
+        # `import fox_overlay.bootstrap` patch that lands in Phase 4 of
+        # the v0.6.0 upstream-separation migration. Extracts to a managed
+        # patch in packages/fox-overlay/patches/agent/ at Phase 8.
+        try:
+            from fox_overlay.agent_plugins import register as _fitb_register
+            _fitb_register(None)
+        except ImportError:
+            pass  # fox-overlay not installed (e.g. upstream-only checkout)
+        # === /FITB ===
+
         # Discover and load event hooks
         self.hooks.discover_and_load()
 
