@@ -1,3 +1,18 @@
+> ## Archived as of 2026-05-18 — Fox in the Box v0.6.0 upstream-separation migration
+>
+> This was Fox in the Box's downstream fork of `NousResearch/hermes-agent`.
+>
+> As of Fox in the Box **v0.6.0** (2026-05-18) this fork is no longer the submodule source. Fox now bundles **virgin upstream** `NousResearch/hermes-agent` and layers Fox-specific behavior on top via the **`packages/fox-overlay/`** package in the monorepo (agent patches under `patches/agent/` + monkey-patches under `fox_overlay.agent_plugins` + memory providers under `agent_memory_plugins/`).
+>
+> - **Monorepo:** [`fox-in-the-box-ai/fox-in-the-box`](https://github.com/fox-in-the-box-ai/fox-in-the-box)
+> - **Virgin upstream:** [`NousResearch/hermes-agent`](https://github.com/NousResearch/hermes-agent)
+> - **Migration architecture:** [`docs/architecture/upstream-overlay.md`](https://github.com/fox-in-the-box-ai/fox-in-the-box/blob/main/docs/architecture/upstream-overlay.md)
+> - **Frozen snapshot:** tag [`fitb-overlay-archive-2026-05-18`](https://github.com/fox-in-the-box-ai/hermes-agent/releases/tag/fitb-overlay-archive-2026-05-18) — last commit that was the submodule source.
+>
+> The contents below are the upstream README at the point the fork was frozen, retained for historical reference only. Do not file new issues here; open them on the monorepo.
+
+---
+
 <p align="center">
   <img src="assets/banner.png" alt="Hermes Agent" width="100%">
 </p>
